@@ -1,5 +1,4 @@
 #!/bin/sh
-
 # Dependencies - webtorrent, mpv
 LANG=en_IN.utf-8
 
