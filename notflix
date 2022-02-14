@@ -1,15 +1,16 @@
 #!/bin/sh
 
 # Dependencies - webtorrent, mpv
+LANG=en_IN.utf-8
 
 mkdir -p $HOME/.cache/notflix
 
-menu="dmenu -i -l 25"
+menu="dmenu -i -h 30 -l 25"
 baseurl="https://1337x.wtf"
 cachedir="$HOME/.cache/notflix"
 
 if [ -z $1 ]; then
-  query=$(dmenu -p "Search Torrent: " <&-)
+  query=$(dmenu -p "Search Torrent: " -h 30 <&-)
 else
   query=$1
 fi
@@ -67,8 +68,8 @@ fullURL="${baseurl}${url}/"
 # Requesting page for magnet link
 curl -s $fullURL > $cachedir/tmp.html
 magnet=$(grep -Po "magnet:\?xt=urn:btih:[a-zA-Z0-9]*" $cachedir/tmp.html | head -n 1) 
-
-webtorrent "$magnet" --mpv
+player=$(echo -e "vlc\nmpv"|dmenu -i -p "Player:" -h 30 )
+webtorrent "$magnet" --$player
 
 # Simple notification
 notify-send "🎥 Enjoy Watching ☺️ " -i "NONE"
