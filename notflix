@@ -69,7 +69,8 @@ fullURL="${baseurl}${url}/"
 curl -s $fullURL > $cachedir/tmp.html
 magnet=$(grep -Po "magnet:\?xt=urn:btih:[a-zA-Z0-9]*" $cachedir/tmp.html | head -n 1) 
 player=$(echo -e "vlc\nmpv"|dmenu -i -p "Player:" -h 30 )
-webtorrent "$magnet" --$player
-
+cmd="webtorrent "$magnet" --$player"
+(!(alacritty msg create-window --command $cmd))&& alacritty --command $cmd
+rm -rf /tmp/webtorrent/*
 # Simple notification
 notify-send "🎥 Enjoy Watching ☺️ " -i "NONE"
